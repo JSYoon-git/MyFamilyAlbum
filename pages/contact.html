@@ -10,6 +10,7 @@
             --font-color: #e0e0e0;
             --input-bg-color: #333;
             --accent-color: #4a90e2;
+            --success-color: #28a745;
         }
         body {
             background-color: var(--bg-color);
@@ -85,6 +86,10 @@
         button:hover {
             background-color: #357abd;
         }
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
         .back-link {
             display: block;
             text-align: center;
@@ -96,13 +101,19 @@
         .back-link:hover {
             color: var(--accent-color);
         }
+        #form-status {
+            margin-top: 15px;
+            text-align: center;
+            color: var(--success-color);
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
 
     <div class="contact-container">
         <h1>제휴 문의</h1>
-        <form action="https://formspree.io/f/xzdaekrw" method="POST">
+        <form id="contact-form">
             <div class="form-group">
                 <label for="name">이름</label>
                 <input type="text" id="name" name="name" required>
@@ -115,10 +126,54 @@
                 <label for="message">메시지</label>
                 <textarea id="message" name="message" required></textarea>
             </div>
-            <button type="submit">문의 보내기</button>
+            <button type="submit">보내기</button>
         </form>
+        <p id="form-status"></p>
         <a href="../index.html" class="back-link">앨범으로 돌아가기</a>
     </div>
+
+    <script>
+        var form = document.getElementById("contact-form");
+        var status = document.getElementById("form-status");
+        var button = form.querySelector("button");
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            var data = new FormData(event.target);
+            
+            button.disabled = true;
+            status.innerHTML = "보내는 중...";
+
+            fetch("https://formspree.io/f/xzdaekrw", {
+                method: "POST",
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    status.innerHTML = "성공적으로 제출되었습니다! 잠시 후 메인 화면으로 돌아갑니다.";
+                    form.reset();
+                    setTimeout(() => {
+                        window.location.href = "../index.html";
+                    }, 2000); // 2초 후 리디렉션
+                } else {
+                    response.json().then(data => {
+                        if (Object.hasOwn(data, 'errors')) {
+                            status.innerHTML = data["errors"].map(error => error["message"]).join(", ");
+                        } else {
+                            status.innerHTML = "이런! 메시지를 보내는 데 문제가 발생했습니다.";
+                        }
+                        button.disabled = false;
+                    });
+                }
+            }).catch(error => {
+                status.innerHTML = "이런! 메시지를 보내는 데 문제가 발생했습니다.";
+                button.disabled = false;
+            });
+        }
+        form.addEventListener("submit", handleSubmit);
+    </script>
 
 </body>
 </html>
