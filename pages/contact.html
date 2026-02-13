@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제휴 문의</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --font-color: #e0e0e0;
+            --input-bg-color: #333;
+            --accent-color: #4a90e2;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--font-color);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .contact-container {
+            background-color: #252525;
+            padding: 30px 40px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            font-weight: 300;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: var(--input-bg-color);
+            color: var(--font-color);
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #357abd;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            color: #aaa;
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+        .back-link:hover {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contact-container">
+        <h1>제휴 문의</h1>
+        <form action="https://formspree.io/f/xzdaekrw" method="POST">
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">메시지</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit">문의 보내기</button>
+        </form>
+        <a href="../index.html" class="back-link">앨범으로 돌아가기</a>
+    </div>
+
+</body>
+</html>
