@@ -170,6 +170,8 @@ body, html {
     justify-content: center;
     align-items: center;
     font-size: 2em;
+    line-height: 1; /* Added for vertical centering of '+' */
+    font-weight: bold; /* Added for a thicker '+' */
     cursor: pointer;
     z-index: 11; /* Above the links container */
     transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
