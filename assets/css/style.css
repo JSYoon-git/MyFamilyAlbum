@@ -116,9 +116,17 @@ body, html {
 #initial-message h1 {
     font-weight: 300;
 }
-.settings-link {
-    position: fixed; /* Position individually */
+.bottom-links {
+    position: fixed;
     bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+    z-index: 10;
+}
+
+.settings-link {
     background-color: rgba(0, 0, 0, 0.6);
     color: #fff;
     padding: 5px 10px; /* Make buttons more compact */
@@ -127,19 +135,6 @@ body, html {
     font-size: 14px;
     opacity: 0.7;
     transition: opacity 0.3s ease;
-    z-index: 10;
-}
-
-.settings-link:hover {
-    opacity: 1;
-}
-
-#gallery-btn {
-    right: 20px; /* Position on the bottom right */
-}
-
-#settings-btn {
-    left: 20px; /* Position on the bottom left */
 }
 
 /* Navigation Arrows */
