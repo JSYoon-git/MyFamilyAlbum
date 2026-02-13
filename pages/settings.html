@@ -4,125 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>앨범 설정</title>
-    <style>
-        :root {
-            --bg-color: #1a1a1a;
-            --font-color: #e0e0e0;
-            --input-bg-color: #333;
-            --accent-color: #4a90e2;
-        }
-        body {
-            background-color: var(--bg-color);
-            color: var(--font-color);
-            font-family: 'Segoe UI', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .settings-container {
-            background-color: #252525;
-            padding: 30px 40px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 400px;
-        }
-        h1 {
-            text-align: center;
-            margin-top: 0;
-            font-weight: 300;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: #aaa;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #444;
-            background-color: var(--input-bg-color);
-            color: var(--font-color);
-            font-size: 16px;
-            box-sizing: border-box;
-        }
-        .button-group {
-            text-align: center;
-            margin-top: 30px;
-        }
-        .button-group button {
-            padding: 10px 25px;
-            border: none;
-            border-radius: 5px;
-            background-color: var(--accent-color);
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .button-group button:hover {
-            background-color: #357abd;
-        }
-        .button-group a {
-            display: inline-block;
-            margin-left: 15px;
-            color: #aaa;
-            text-decoration: none;
-        }
-        #save-status {
-            text-align: center;
-            margin-top: 20px;
-            color: #28a745;
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        /* New Styles for Palette, Slider, and Select */
-        #color-palette {
-            display: flex;
-            gap: 10px;
-        }
-        .color-swatch {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: border-color 0.2s;
-        }
-        .color-swatch.selected {
-            border-color: var(--accent-color);
-        }
-        .form-group input[type="range"] {
-            width: calc(100% - 60px);
-            vertical-align: middle;
-        }
-        #brightness-value {
-            display: inline-block;
-            width: 50px;
-            text-align: right;
-            color: #aaa;
-            vertical-align: middle;
-        }
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #444;
-            background-color: var(--input-bg-color);
-            color: var(--font-color);
-            font-size: 16px;
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
+<body class="settings-page-body">
 
-<div class="settings-container">
-    <h1>앨범 설정</h1>
+<div class="settings-container glass-container">
+    <h1 class="settings-page-h1">앨범 설정</h1>
     
     <div class="form-group">
         <label for="interval">슬라이드 전환 간격 (초)</label>
@@ -164,8 +51,8 @@
     </div>
 
     <div class="button-group">
-        <button id="save-button">저장</button>
-        <a href="../index.html">앨범으로 돌아가기</a>
+        <button id="save-button" class="btn-primary">저장</button>
+        <a href="../index.html" class="settings-link">앨범으로 돌아가기</a>
     </div>
     <p id="save-status">저장되었습니다!</p>
 </div>

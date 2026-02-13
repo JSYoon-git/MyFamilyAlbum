@@ -2,7 +2,8 @@
     --bg-color: #000000; /* 기본 배경 검은색으로 변경 */
     --font-color: #e0e0e0;
     --dim-font-color: #888;
-    --accent-color: #4a90e2;
+    --accent-color: #007AFF;
+    --input-bg-color: rgba(255, 255, 255, 0.08);
 }
 body, html {
     height: 100%;
@@ -185,14 +186,119 @@ body, html {
 }
 
 .settings-link {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15); /* Subtle border */
     color: #fff;
-    padding: 5px 10px; /* Make buttons more compact */
-    border-radius: 15px;
+    padding: 8px 16px; /* Slightly larger padding for better touch targets */
+    border-radius: 10px; /* Slightly less rounded than 15px, more Apple-like */
     text-decoration: none;
     font-size: 14px;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
+    opacity: 1; /* Always visible, opacity change on hover */
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+}
+
+.settings-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+}
+
+/* Form Elements */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px; /* Slightly more rounded */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+    background-color: var(--input-bg-color); /* Use variable */
+    color: var(--font-color);
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    -webkit-appearance: none; /* For select dropdown arrow */
+    -moz-appearance: none;
+    appearance: none;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.15); /* Slightly brighter on focus */
+    outline: none;
+}
+
+select {
+    padding-right: 30px; /* Make space for custom arrow if needed */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="white" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 24px;
+}
+
+/* General Glass Container Style */
+.glass-container {
+    background-color: rgba(0, 0, 0, 0.3); /* Darker translucent background */
+    backdrop-filter: blur(10px); /* Stronger blur for frosted effect */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px; /* More pronounced rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+}
+
+/* Gallery Page Specific Styles (from gallery.html inline, refined) */
+.gallery-body { /* New class for gallery body, to use for padding */
+    padding: 20px;
+}
+
+.gallery-page-h1 { /* New class for gallery h1 */
+    text-align: center;
+    font-weight: 300;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+    padding-bottom: 20px;
+    margin-top: 0;
+    color: var(--font-color);
+}
+
+#thumbnail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+.thumbnail-item {
+    width: 100%;
+    height: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
+    border-radius: 8px; /* Consistent rounded corners */
+    overflow: hidden;
+    position: relative;
+    display: block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.thumbnail-item:hover {
+    transform: scale(1.03); /* Slight scale up */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+.thumbnail-item img,
+.thumbnail-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.2s ease;
+}
+.thumbnail-item .video-indicator {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Navigation Arrows */
@@ -226,5 +332,175 @@ body, html {
 
 .nav-arrow.right {
     right: 20px;
+}
+
+/* Settings Page Specific Styles */
+.settings-page-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.settings-container { /* This will also have .glass-container */
+    padding: 30px 40px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.settings-page-h1 {
+    text-align: center;
+    margin-top: 0;
+    font-weight: 300;
+    color: var(--font-color); /* Use global font color */
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #aaa; /* Dim font color */
+}
+
+/* Primary Button Style */
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 20px; /* Specific to this context, might need to be adjusted */
+}
+.btn-primary:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 80%, black); /* Darker accent on hover */
+}
+.btn-primary:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+.button-group a { /* This should use .settings-link */
+    display: inline-block;
+    margin-left: 15px;
+    /* .settings-link will override these, so no specific styling here */
+}
+
+#save-status {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--accent-color); /* Use accent color for success */
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+/* Color Palette, Slider, and Select specific styles */
+#color-palette {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: 10px;
+    justify-content: center; /* Center swatches */
+}
+.color-swatch {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.color-swatch.selected {
+    border-color: var(--accent-color);
+    transform: scale(1.1);
+}
+.form-group input[type="range"] {
+    width: calc(100% - 60px); /* Adjust width */
+    vertical-align: middle;
+    -webkit-appearance: none;
+    background: transparent;
+}
+.form-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+  margin-top: -6px; /* Adjust this value to center the thumb vertically */
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+}
+.form-group input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+}
+
+#brightness-value {
+    display: inline-block;
+    width: 50px;
+    text-align: right;
+    color: #aaa;
+    vertical-align: middle;
+}
+
+/* Contact Page Specific Styles */
+.contact-page-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contact-container { /* This will also have .glass-container */
+    padding: 30px 40px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.contact-page-h1 {
+    text-align: center;
+    margin-top: 0;
+    font-weight: 300;
+    color: var(--accent-color); /* Use accent color for headings */
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #aaa; /* Dim font color */
+    font-size: 0.9em;
+}
+
+/* Button (explicitly for form submission) */
+.contact-container button { /* This will be .btn-primary */
+    margin-top: 20px;
+}
+
+#form-status {
+    margin-top: 15px;
+    text-align: center;
+    color: var(--success-color, #28a745); /* Use accent or default success color */
+    font-size: 0.9em;
 }
 
