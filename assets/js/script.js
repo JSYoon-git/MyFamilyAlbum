@@ -87,6 +87,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
+
+        // Toggle button logic
+        const toggleBtn = document.getElementById('toggle-btn');
+        const bottomLinksContainer = document.getElementById('bottom-links-container');
+
+        if (toggleBtn && bottomLinksContainer) {
+            toggleBtn.addEventListener('click', () => {
+                toggleBtn.classList.toggle('open');
+                bottomLinksContainer.classList.toggle('open');
+            });
+        }
     }
 
     function loadSettings() {

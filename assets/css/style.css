@@ -14,6 +14,21 @@ body, html {
     font-family: 'Segoe UI', sans-serif;
     overflow: hidden;
 }
+
+#brand-name {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 2.5em;
+    font-weight: 300;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    margin: 0;
+    padding: 0;
+}
+
 #album-container {
     width: 100%;
     height: 100%;
@@ -118,12 +133,46 @@ body, html {
 }
 .bottom-links {
     position: fixed;
-    bottom: 20px;
+    bottom: 20px; /* Start at the same bottom as toggle-btn */
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(100px); /* Initially hide below the screen */
     display: flex;
     gap: 15px;
     z-index: 10;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+    pointer-events: none; /* Make it non-interactive when hidden */
+}
+
+.bottom-links.open {
+    transform: translateX(-50%) translateY(-50px); /* Adjust position when open, above the toggle button */
+    opacity: 1;
+    pointer-events: auto; /* Make it interactive when open */
+}
+
+#toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: var(--accent-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    cursor: pointer;
+    z-index: 11; /* Above the links container */
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    user-select: none;
+}
+
+#toggle-btn.open {
+    transform: translateX(-50%) rotate(45deg); /* Rotate to form an 'X' */
+    background-color: #f00; /* Red when open */
 }
 
 .settings-link {
