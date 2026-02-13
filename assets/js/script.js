@@ -25,6 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     async function init() {
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
         loadSettings();
         applySettings();
         
@@ -65,6 +74,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Event Listeners
         nextBtn.addEventListener('click', () => showNextMedia(true));
         prevBtn.addEventListener('click', () => showPreviousMedia(true));
+
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        if (fullscreenBtn) {
+            fullscreenBtn.addEventListener('click', () => {
+                if (document.fullscreenElement) {
+                    document.exitFullscreen();
+                } else {
+                    document.documentElement.requestFullscreen().catch(err => {
+                        console.error(`Error attempting to enable fullscreen: ${err.message} (${err.name})`);
+                    });
+                }
+            });
+        }
     }
 
     function loadSettings() {
