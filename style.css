@@ -1,0 +1,177 @@
+:root {
+    --bg-color: #000000; /* 기본 배경 검은색으로 변경 */
+    --font-color: #e0e0e0;
+    --dim-font-color: #888;
+    --accent-color: #4a90e2;
+}
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--font-color);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+#album-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+}
+#slideshow {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-color);
+}
+
+/* 사진 및 비디오 크기 문제 해결 */
+#slideshow img,
+#slideshow video {
+    min-width: 100%;
+    min-height: 100%;
+    max-width: 100vw;   /* 화면 너비에 맞게 최대 너비 제한 */
+    max-height: 100vh;  /* 화면 높이에 맞게 최대 높이 제한 */
+    object-fit: contain; /* 이제 전체 이미지를 보여주고, 배경이 빈 공간을 채웁니다. */
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    position: relative; /* z-index를 위해 relative로 변경 */
+    z-index: 2;
+}
+
+#background-blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(25px) brightness(0.6);
+    transform: scale(1.2);
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    z-index: 1;
+}
+
+#slideshow img.active,
+#slideshow video.active {
+    opacity: 1;
+}
+
+/* Fade Transition */
+.fade-in {
+    animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Slide Transition */
+.slide-in-next {
+    animation: slideInFromRight 0.6s ease-out forwards;
+}
+.slide-in-prev {
+    animation: slideInFromLeft 0.6s ease-out forwards;
+}
+.slide-out-next {
+    animation: slideOutToLeft 0.6s ease-in forwards;
+}
+.slide-out-prev {
+    animation: slideOutToRight 0.6s ease-in forwards;
+}
+
+@keyframes slideInFromRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideInFromLeft {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideOutToLeft {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(-100%); opacity: 0; }
+}
+@keyframes slideOutToRight {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+}
+
+#initial-message {
+    text-align: center;
+    color: var(--dim-font-color);
+    position: relative; /* 다른 요소와 겹치지 않게 */
+    z-index: 1;
+}
+#initial-message h1 {
+    font-weight: 300;
+}
+.settings-link {
+    position: fixed; /* Position individually */
+    bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 5px 10px; /* Make buttons more compact */
+    border-radius: 15px;
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.settings-link:hover {
+    opacity: 1;
+}
+
+#gallery-btn {
+    right: 20px; /* Position on the bottom right */
+}
+
+#settings-btn {
+    left: 20px; /* Position on the bottom left */
+}
+
+/* Navigation Arrows */
+.nav-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    color: white;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 10px 15px;
+    border-radius: 10px;
+    user-select: none;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    z-index: 20;
+}
+
+#album-container:hover .nav-arrow {
+    opacity: 0.7;
+}
+
+.nav-arrow:hover {
+    opacity: 1 !important;
+}
+
+.nav-arrow.left {
+    left: 20px;
+}
+
+.nav-arrow.right {
+    right: 20px;
+}
+

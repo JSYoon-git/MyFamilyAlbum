@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>앨범 설정</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --font-color: #e0e0e0;
+            --input-bg-color: #333;
+            --accent-color: #4a90e2;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--font-color);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .settings-container {
+            background-color: #252525;
+            padding: 30px 40px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+            font-weight: 300;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: var(--input-bg-color);
+            color: var(--font-color);
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .button-group {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .button-group button {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--accent-color);
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .button-group button:hover {
+            background-color: #357abd;
+        }
+        .button-group a {
+            display: inline-block;
+            margin-left: 15px;
+            color: #aaa;
+            text-decoration: none;
+        }
+        #save-status {
+            text-align: center;
+            margin-top: 20px;
+            color: #28a745;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        /* New Styles for Palette, Slider, and Select */
+        #color-palette {
+            display: flex;
+            gap: 10px;
+        }
+        .color-swatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .color-swatch.selected {
+            border-color: var(--accent-color);
+        }
+        .form-group input[type="range"] {
+            width: calc(100% - 60px);
+            vertical-align: middle;
+        }
+        #brightness-value {
+            display: inline-block;
+            width: 50px;
+            text-align: right;
+            color: #aaa;
+            vertical-align: middle;
+        }
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: var(--input-bg-color);
+            color: var(--font-color);
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="settings-container">
+    <h1>앨범 설정</h1>
+    
+    <div class="form-group">
+        <label for="interval">슬라이드 전환 간격 (초)</label>
+        <input type="number" id="interval" min="1" placeholder="예: 5">
+    </div>
+
+    <div class="form-group">
+        <label>배경색</label>
+        <div id="color-palette">
+            <div class="color-swatch" data-color="#000000" style="background-color: #000000;"></div>
+            <div class="color-swatch" data-color="#1a1a1a" style="background-color: #1a1a1a;"></div>
+            <div class="color-swatch" data-color="#333333" style="background-color: #333333;"></div>
+            <div class="color-swatch" data-color="#f5f5f5" style="background-color: #f5f5f5;"></div>
+            <div class="color-swatch" data-color="#1c2541" style="background-color: #1c2541;"></div>
+            <div class="color-swatch" data-color="#4a4e69" style="background-color: #4a4e69;"></div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="brightness">사진/영상 밝기</label>
+        <input type="range" id="brightness" min="50" max="150" value="100">
+        <span id="brightness-value">100%</span>
+    </div>
+
+    <div class="form-group">
+        <label for="transition">전환 효과</label>
+        <select id="transition">
+            <option value="fade">페이드 (Fade)</option>
+            <option value="slide">슬라이드 (Slide)</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="order">재생 순서</label>
+        <select id="order">
+            <option value="sequential">순서대로</option>
+            <option value="random">랜덤</option>
+        </select>
+    </div>
+
+    <div class="button-group">
+        <button id="save-button">저장</button>
+        <a href="index.html">앨범으로 돌아가기</a>
+    </div>
+    <p id="save-status">저장되었습니다!</p>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const SETTINGS_KEY = 'web-album-settings';
+
+        // Element references
+        const intervalInput = document.getElementById('interval');
+        const colorPalette = document.getElementById('color-palette');
+        const brightnessSlider = document.getElementById('brightness');
+        const brightnessValueSpan = document.getElementById('brightness-value');
+        const transitionSelect = document.getElementById('transition');
+        const orderSelect = document.getElementById('order');
+        const saveButton = document.getElementById('save-button');
+        const saveStatus = document.getElementById('save-status');
+
+        let selectedColor = '#000000';
+
+
+        // Update brightness value display
+        brightnessSlider.addEventListener('input', () => {
+            brightnessValueSpan.textContent = `${brightnessSlider.value}%`;
+        });
+        
+        // Handle color selection
+        colorPalette.addEventListener('click', (e) => {
+            if (e.target.classList.contains('color-swatch')) {
+                // Remove 'selected' from previous
+                const currentSelected = colorPalette.querySelector('.selected');
+                if (currentSelected) {
+                    currentSelected.classList.remove('selected');
+                }
+                // Add 'selected' to new
+                e.target.classList.add('selected');
+                selectedColor = e.target.dataset.color;
+            }
+        });
+
+        // Load saved settings
+        function loadSettings() {
+            const savedSettings = localStorage.getItem(SETTINGS_KEY);
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                
+                intervalInput.value = settings.interval ? settings.interval / 1000 : 5;
+                selectedColor = settings.backgroundColor || '#000000';
+                brightnessSlider.value = settings.brightness || 100;
+                transitionSelect.value = settings.transition || 'fade';
+                orderSelect.value = settings.order || 'sequential';
+
+                // Update UI based on loaded settings
+                brightnessValueSpan.textContent = `${brightnessSlider.value}%`;
+                const activeSwatch = colorPalette.querySelector(`[data-color="${selectedColor}"]`);
+                if (activeSwatch) {
+                    activeSwatch.classList.add('selected');
+                } else {
+                    colorPalette.firstElementChild.classList.add('selected'); // Fallback
+                }
+            } else {
+                // Default settings for first-time load
+                intervalInput.value = 5;
+                brightnessSlider.value = 100;
+                brightnessValueSpan.textContent = '100%';
+                transitionSelect.value = 'fade';
+                colorPalette.firstElementChild.classList.add('selected');
+                selectedColor = '#000000';
+            }
+        }
+
+        // Save settings
+        saveButton.addEventListener('click', () => {
+            const intervalSeconds = parseInt(intervalInput.value, 10);
+            
+            if (isNaN(intervalSeconds) || intervalSeconds < 1) {
+                alert('전환 간격은 1 이상의 숫자를 입력해주세요.');
+                return;
+            }
+
+            const settings = {
+                interval: intervalSeconds * 1000,
+                backgroundColor: selectedColor,
+                brightness: parseInt(brightnessSlider.value, 10),
+                transition: transitionSelect.value,
+                order: orderSelect.value
+            };
+
+            localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+            
+            saveStatus.style.opacity = 1;
+            setTimeout(() => {
+                saveStatus.style.opacity = 0;
+            }, 2000);
+        });
+
+        loadSettings();
+    });
+</script>
+
+</body>
+</html>

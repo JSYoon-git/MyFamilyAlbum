@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>앨범 목록</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --font-color: #e0e0e0;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--font-color);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-weight: 300;
+            border-bottom: 1px solid #444;
+            padding-bottom: 20px;
+            margin-top: 0;
+        }
+        a.back-link {
+            display: block;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4a90e2;
+            text-decoration: none;
+        }
+        #thumbnail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        .thumbnail-item {
+            width: 100%;
+            height: 100px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            display: block;
+        }
+        .thumbnail-item img,
+        .thumbnail-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.2s ease;
+        }
+        .thumbnail-item:hover img,
+        .thumbnail-item:hover video {
+            transform: scale(1.05);
+        }
+        .thumbnail-item .video-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+            color: rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>전체 목록</h1>
+    <a href="index.html" class="back-link">앨범으로 돌아가기</a>
+    <div id="thumbnail-grid"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const thumbnailGrid = document.getElementById('thumbnail-grid');
+            let mediaItems = [];
+
+            try {
+                const response = await fetch('media-list.json?t=' + new Date().getTime());
+                if (!response.ok) throw new Error('media-list.json을 불러올 수 없습니다.');
+                const data = await response.json();
+                mediaItems = data.media || [];
+            } catch (error) {
+                console.error(error);
+                thumbnailGrid.innerHTML = '<p style="text-align: center;">미디어 목록을 불러오는 데 실패했습니다.</p>';
+                return;
+            }
+
+            if (mediaItems.length === 0) {
+                thumbnailGrid.innerHTML = '<p style="text-align: center;">표시할 미디어가 없습니다.</p>';
+                return;
+            }
+            
+            mediaItems.forEach((item, index) => {
+                const link = document.createElement('a');
+                link.href = `index.html#image=${index}`;
+                link.className = 'thumbnail-item';
+
+                if (item.type === 'image') {
+                    const img = document.createElement('img');
+                    img.src = item.path;
+                    link.appendChild(img);
+                } else {
+                    const video = document.createElement('video');
+                    video.src = item.path + '#t=0.5';
+                    video.muted = true;
+                    link.appendChild(video);
+                    const indicator = document.createElement('div');
+                    indicator.className = 'video-indicator';
+                    indicator.innerHTML = '▶';
+                    link.appendChild(indicator);
+                }
+                thumbnailGrid.appendChild(link);
+            });
+        });
+    </script>
+
+</body>
+</html>
