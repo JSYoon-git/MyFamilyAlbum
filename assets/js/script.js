@@ -86,6 +86,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             });
+
+            // Listen for fullscreen change events to update button text
+            document.addEventListener('fullscreenchange', () => {
+                if (document.fullscreenElement) {
+                    fullscreenBtn.textContent = '창모드';
+                } else {
+                    fullscreenBtn.textContent = '앨범 모드';
+                }
+            });
         }
 
         // Toggle button logic

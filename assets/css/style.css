@@ -20,8 +20,8 @@ body, html {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    color: #fff;
-    font-size: 2.5em;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 2em;
     font-weight: 300;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     z-index: 10;
@@ -142,6 +142,10 @@ body, html {
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
     opacity: 0;
     pointer-events: none; /* Make it non-interactive when hidden */
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+    background-color: rgba(0, 0, 0, 0.2); /* Slightly transparent background */
+    border-radius: 10px;
+    padding: 10px 15px;
 }
 
 .bottom-links.open {
@@ -157,7 +161,9 @@ body, html {
     transform: translateX(-50%);
     width: 40px;
     height: 40px;
-    background-color: var(--accent-color);
+    background-color: rgba(255, 255, 255, 0.15); /* Subtle translucent */
+    backdrop-filter: blur(5px); /* Frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -166,13 +172,14 @@ body, html {
     font-size: 2em;
     cursor: pointer;
     z-index: 11; /* Above the links container */
-    transition: transform 0.3s ease, background-color 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
     user-select: none;
 }
 
 #toggle-btn.open {
     transform: translateX(-50%) rotate(45deg); /* Rotate to form an 'X' */
-    background-color: #f00; /* Red when open */
+    background-color: rgba(255, 255, 255, 0.3); /* Slightly brighter translucent when open */
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .settings-link {
