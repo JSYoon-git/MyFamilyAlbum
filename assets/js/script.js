@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         try {
-            const response = await fetch('media-list.json?t=' + new Date().getTime());
+            const response = await fetch('assets/data/media-list.json?t=' + new Date().getTime());
             if (!response.ok) throw new Error(`Failed to load media-list.json: ${response.statusText}`);
             const data = await response.json();
             mediaItems = data.media || [];

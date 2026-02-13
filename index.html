@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>나만의 웹 앨범</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
@@ -15,7 +15,7 @@
         <video id="current-video" src="" autoplay muted style="display: none;"></video>
         <div id="initial-message">
             <h1>나만의 웹 앨범</h1>
-            <p>photo/video 폴더에 파일을 넣고, media-list.json에 파일 경로를 직접 추가해주세요.</p>
+            <p>assets/photo 및 assets/video 폴더에 파일을 넣고, assets/data/media-list.json에 파일 경로를 직접 추가해주세요.</p>
         </div>
     </div>
 
@@ -24,10 +24,10 @@
     <div class="nav-arrow right" id="next-btn">›</div>
 </div>
 
-<a href="gallery.html" id="gallery-btn" class="settings-link">갤러리</a>
-<a href="settings.html" id="settings-btn" class="settings-link">설정</a>
+<a href="pages/gallery.html" id="gallery-btn" class="settings-link">갤러리</a>
+<a href="pages/settings.html" id="settings-btn" class="settings-link">설정</a>
 
-<script src="script.js" defer></script>
+<script src="assets/js/script.js" defer></script>
 
 </body>
 </html>
